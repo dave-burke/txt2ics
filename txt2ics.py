@@ -229,6 +229,25 @@ def convert(input_path, output_path):
 
 if __name__ == "__main__":
     if len(sys.argv) != 3:
-        print(f"Usage: {sys.argv[0]} input.txt output.ics")
+        print(f"""Usage: {sys.argv[0]} INPUT OUTPUT
+
+Convert a plain-text event list to an iCalendar (.ics) file.
+
+Arguments:
+  INPUT   plain text file, one event per line
+  OUTPUT  .ics file to write
+
+Event format:
+  START END | SUMMARY [| LOCATION]
+
+START/END formats (most to least explicit):
+  2026-05-01T08:00:00   full datetime, seconds optional
+  2026-05-01T08:00      date + time (T separator)
+  2026-05-01 08:00      date + time (space separator)
+  05-01 08:00           date + time, current year assumed
+  09:00                 time only; date inherited from START
+  2026-05-01            date only; produces an all-day event
+
+Hours need not be zero-padded. Blank lines and # comments are ignored.""")
         sys.exit(1)
     convert(sys.argv[1], sys.argv[2])
